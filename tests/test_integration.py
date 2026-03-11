@@ -108,7 +108,7 @@ class TestMondrianPipeline:
         p = scorer.predict(X_test, strata=strata_labels["test"])
         result = bh_procedure(p, alpha=0.05)
         # On genuine data, referral rate should be low
-        assert result.referral_rate < 0.2
+        assert result.n_rejected / len(p) < 0.2
 
 
 class TestConsortiumPipeline:
