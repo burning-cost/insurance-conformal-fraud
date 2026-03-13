@@ -120,6 +120,16 @@ The calibration set must contain confirmed genuine claims. Key risks:
 - **Label contamination**: Including undetected fraud in the calibration set biases scores but does not invalidate p-value coverage — it reduces power.
 - **Stratification failure**: Do not pool TPBI, AD, and Theft. Use `MondrianFraudScorer`.
 
+## Capabilities
+
+The notebook at `notebooks/demo_insurance_conformal_fraud.py` runs a complete fraud detection pipeline on synthetic UK motor claims and demonstrates:
+
+- **FDR control works**: BH procedure at alpha=5% produces referral lists where the empirical false discovery proportion stays near the target, measured on a labelled test set with known fraud/genuine split.
+- **P-value validity**: KS test confirms that conformal p-values on confirmed genuine claims are uniform on [0,1] — the foundational requirement for valid FDR control.
+- **Mondrian stratification by claim type**: Separate calibration per claim type (TPBI, AD, Theft) maintains exchangeability where pooling would violate it.
+- **Integrative conformal boosts power**: Including 15 confirmed SIU cases in calibration (Lemos et al. 2024) increases fraud detection relative to the standard approach at the same FDR level.
+- **Consortium Fisher combination**: Three simulated insurers sharing only p-values (not raw data) achieve higher detection than any single insurer alone.
+
 ## References
 
 - Bates, Candès, Lei, Romano, Sesia (2023). Testing for outliers with conformal p-values. *Annals of Statistics* 51(1):149-178.
